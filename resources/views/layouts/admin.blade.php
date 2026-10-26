@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>@yield('title', 'Admin') - Strawberry Alfatih</title>
+<link rel="icon" href="{{ asset('assets/img/brand/logo-circle.jpg') }}">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <a href="{{ route('admin.dashboard') }}" class="logo"><img src="{{ asset('assets/img/brand/logo-circle.jpg') }}" alt="" width="40" height="40"><span>Strawberry <em>Alfatih</em></span></a>
+    <nav>
+      <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'on' : '' }}">Ringkasan</a>
+      <a href="{{ route('admin.products.index') }}" class="{{ request()->routeIs('admin.products.*') ? 'on' : '' }}">Produk</a>
+      <a href="{{ route('home') }}" target="_blank" rel="noopener">Lihat website &rarr;</a>
+    </nav>
+    <form method="POST" action="{{ route('admin.logout') }}">@csrf<button class="link-btn" type="submit">Keluar ({{ auth()->user()->name }})</button></form>
+  </aside>
+  <main class="main">
+    @if(session('status'))<div class="flash ok" role="status">{{ session('status') }}</div>@endif
+    @yield('content')
+  </main>
+</div>
+</body>
+</html>
+
+

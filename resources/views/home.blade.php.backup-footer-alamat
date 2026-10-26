@@ -1,0 +1,997 @@
+﻿@extends('layouts.app')
+
+@section('title', 'Beranda - Strawberry Alfatih')
+
+@section('content')
+<section class="hero hero-editorial" id="beranda">
+    <div class="hero-editorial-inner">
+        <div class="hero-text hero-editorial-text">
+            <span class="editorial-eyebrow">Manisnya momen spesial</span>
+            <h1>Segar dari dapur kami,<br><em>khusus untukmu.</em></h1>
+            <p>Temukan pilihan strawberry favoritmu dengan rasa yang istimewa. Dibuat dengan bahan terbaik dan penuh cinta.</p>
+            <div class="hero-btns">
+                <a href="#katalog" class="btn btn-primary">Lihat Produk <span aria-hidden="true">&rarr;</span></a>
+                <a href="{{ \App\Support\Whatsapp::url('Halo Strawberry Alfatih, saya ingin bertanya dan memesan kue.') }}" target="_blank" rel="noopener" class="btn btn-outline">Pesan via WhatsApp</a>
+            </div>
+            <a href="#katalog" class="hero-scroll-hint">
+                <span class="scroll-mouse" aria-hidden="true"></span>
+                Gulir untuk melihat produk lainnya
+            </a>
+        </div>
+        <div class="hero-photo hero-editorial-photo">
+            <img src="{{ asset('assets/img/hero.jpg') }}" alt="Kue strawberry dengan topping buah stroberi segar" width="900" height="700" fetchpriority="high">
+        </div>
+    </div>
+</section>
+<section class="stats-section">
+    <div class="stats-container">
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="500">0</span>+</h2>
+            <p>Pelanggan Puas</p>
+        </div>
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="20">0</span>+</h2>
+            <p>Varian Kue</p>
+        </div>
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="1000">0</span>+</h2>
+            <p>Pesanan Selesai</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.stats-section {
+    background: #fff4f6;
+    padding: 38px 20px;
+}
+.stats-container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    gap: 20px;
+}
+.stat-item {
+    padding: 12px;
+}
+.stat-item h2 {
+    color: #b52d55;
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 0 0 8px;
+    font-weight: 800;
+}
+.stat-item p {
+    color: #65434d;
+    margin: 0;
+    font-size: 15px;
+}
+@media (max-width: 600px) {
+    .stats-container { gap: 6px; }
+    .stat-item { padding: 8px 2px; }
+    .stat-item p { font-size: 12px; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const stats = document.querySelector('.stats-section');
+    if (!stats) return;
+
+    const counters = stats.querySelectorAll('.count-up');
+    let hasAnimated = false;
+
+    function animateCounters() {
+        counters.forEach(function (el) {
+            const target = Number(el.dataset.target);
+            const duration = 1600;
+            const startTime = performance.now();
+
+            function update(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+
+                el.textContent = Math.floor(target * eased).toLocaleString('id-ID');
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString('id-ID');
+                }
+            }
+
+            el.textContent = '0';
+            requestAnimationFrame(update);
+        });
+    }
+
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                animateCounters();
+                observer.unobserve(stats);
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    observer.observe(stats);
+});
+</script>
+
+
+<section class="section about" id="tentang">
+  <div class="container about-grid">
+    <img src="{{ asset('assets/img/brand/logo-circle.jpg') }}" alt="Papan logo Strawberry Alfatih Cake & Dessert" width="280" height="297" loading="lazy">
+    <div>
+      <h2>Tentang Kami</h2>
+      <p>Strawberry Alfatih adalah toko cake & dessert yang menyajikan cheesecake, shortcake, brownies, dan kue custom dengan sentuhan stroberi. Setiap kue dapat diberi tulisan ucapan sesuai momen spesialmu.</p>
+      <p>Untuk request desain, tulisan ucapan, atau pesanan khusus, hubungi kami lewat WhatsApp.</p>
+    </div>
+  </div>
+</section>
+<style>
+.testimoni-strawberry {
+    padding: 78px 0;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 0% 0%, #ffe0e8 0%, transparent 42%),
+        linear-gradient(135deg, #fffaf5, #fff0f3 55%, #fff8ed);
+}
+.testimoni-strawberry .review-heading {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 34px;
+    padding: 0 20px;
+}
+.testimoni-strawberry .review-kicker {
+    color: #c43d5c;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+.testimoni-strawberry .review-heading h2 {
+    color: #792b40;
+    font-size: clamp(27px, 4vw, 40px);
+    margin: 10px 0;
+}
+.testimoni-strawberry .review-heading p {
+    color: #88636c;
+    line-height: 1.8;
+}
+.testimoni-strawberry .review-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 14px max(22px, calc((100vw - 1100px)/2)) 28px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #e6a4b3 #fff0f3;
+}
+.testimoni-strawberry .review-card {
+    flex: 0 0 min(320px, 82vw);
+    scroll-snap-align: start;
+    padding: 25px;
+    border: 1px solid #f5dce2;
+    border-radius: 22px;
+    background: rgba(255,255,255,.94);
+    box-shadow: 0 12px 32px rgba(124,44,64,.08);
+}
+.testimoni-strawberry .review-stars {
+    color: #e8a43b;
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+}
+.testimoni-strawberry .review-quote {
+    color: #684b53;
+    line-height: 1.85;
+    min-height: 105px;
+}
+.testimoni-strawberry .review-person {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 17px;
+    border-top: 1px solid #f6e5e9;
+}
+.testimoni-strawberry .review-avatar {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f7c6d2, #ffe9d7);
+    color: #9d304d;
+    font-weight: 800;
+}
+.testimoni-strawberry .review-name {
+    color: #792b40;
+    font-weight: 750;
+}
+.testimoni-strawberry .review-label {
+    color: #a17d85;
+    font-size: 11px;
+    margin-top: 4px;
+}
+</style>
+
+<style>
+.testimoni-strawberry .review-marquee {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overflow: hidden;
+}
+.testimoni-strawberry .review-track {
+    display: flex;
+    width: max-content;
+    gap: 18px;
+    animation: strawberry-kanan 35s linear infinite;
+}
+.testimoni-strawberry .review-track.reverse {
+    animation-name: strawberry-kiri;
+    animation-duration: 40s;
+}
+.testimoni-strawberry .review-card {
+    flex: 0 0 300px;
+    width: 300px;
+}
+@keyframes strawberry-kanan {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+}
+@keyframes strawberry-kiri {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+@media (max-width: 600px) {
+    .testimoni-strawberry .review-card {
+        flex-basis: 265px;
+        width: 265px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .testimoni-strawberry .review-track { animation: none; }
+}
+</style>
+<style id="review-compact-fix">
+.testimoni-strawberry .review-marquee {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+    padding: 8px 0;
+}
+.testimoni-strawberry .review-track {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+}
+.testimoni-strawberry .review-card {
+    box-sizing: border-box;
+    flex: 0 0 260px;
+    width: 260px;
+    min-height: 0;
+    padding: 16px;
+    border-radius: 14px;
+}
+.testimoni-strawberry .review-card p {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+}
+.testimoni-strawberry .review-card h3,
+.testimoni-strawberry .review-card h4,
+.testimoni-strawberry .review-card strong {
+    font-size: 13px;
+    line-height: 1.4;
+}
+.testimoni-strawberry .review-card .avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
+}
+@media (max-width: 600px) {
+    .testimoni-strawberry .review-card {
+        flex-basis: 230px;
+        width: 230px;
+        padding: 13px;
+    }
+}
+</style>
+<style id="review-horizontal-fix">
+#testimoni-strawberry .review-marquee {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+    width: 100%;
+    padding: 8px 0;
+}
+
+#testimoni-strawberry .review-track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 12px;
+    width: max-content;
+}
+
+#testimoni-strawberry .review-card {
+    box-sizing: border-box !important;
+    flex: 0 0 280px !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+    min-height: 0 !important;
+    height: 135px !important;
+    padding: 13px 16px !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#testimoni-strawberry .review-stars {
+    font-size: 12px !important;
+    line-height: 1.2;
+    margin: 0 0 5px !important;
+}
+
+#testimoni-strawberry .review-quote {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+    margin: 0 0 7px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#testimoni-strawberry .review-card strong,
+#testimoni-strawberry .review-card h3,
+#testimoni-strawberry .review-card h4 {
+    font-size: 12px !important;
+    line-height: 1.3;
+    margin: 0 !important;
+}
+
+#testimoni-strawberry .review-card .avatar {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px;
+    font-size: 10px !important;
+}
+
+@media (max-width: 600px) {
+    #testimoni-strawberry .review-card {
+        flex-basis: 245px !important;
+        width: 245px !important;
+        min-width: 245px !important;
+        max-width: 245px !important;
+        height: 130px !important;
+        padding: 11px 13px !important;
+    }
+}
+</style>
+<style id="review-profile-fix">
+#testimoni-strawberry .review-profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    margin-top: 7px;
+}
+#testimoni-strawberry .review-profile .avatar {
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8dce5;
+    color: #873b55;
+    font-size: 11px;
+    font-weight: 700;
+}
+#testimoni-strawberry .review-profile .review-name {
+    display: block;
+    color: #713548;
+    font-size: 12px;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+</style>
+<style id="review-avatar-final">
+#testimoni-strawberry .review-person {
+    display: flex !important;
+    align-items: center !important;
+    gap: 9px !important;
+    margin-top: auto !important;
+    min-width: 0;
+}
+#testimoni-strawberry .review-avatar {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #f8dce5 !important;
+    color: #873b55 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+#testimoni-strawberry .review-name {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    overflow-wrap: anywhere;
+}
+#testimoni-strawberry .review-label {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+}
+</style>
+<style id="review-visible-fix">
+.testimoni-strawberry .review-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    height: auto !important;
+    min-height: 135px !important;
+    padding: 12px 14px !important;
+    overflow: visible !important;
+}
+.testimoni-strawberry .review-stars {
+    margin-bottom: 4px !important;
+}
+.testimoni-strawberry .review-quote {
+    min-height: 0 !important;
+    margin: 0 0 8px !important;
+    line-height: 1.4 !important;
+    font-size: 12px !important;
+}
+.testimoni-strawberry .review-person {
+    display: grid !important;
+    grid-template-columns: 30px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    align-items: center !important;
+    column-gap: 9px !important;
+    row-gap: 2px !important;
+    margin-top: auto !important;
+    padding-top: 7px !important;
+    border-top: 1px solid #f6e5e9 !important;
+    min-width: 0 !important;
+}
+.testimoni-strawberry .review-person .review-avatar {
+    grid-column: 1 !important;
+    grid-row: 1 / span 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    border-radius: 50% !important;
+    background: #f8dce5 !important;
+    color: #873b55 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+.testimoni-strawberry .review-person .review-name {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    display: block !important;
+    color: #792b40 !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    overflow-wrap: anywhere !important;
+}
+.testimoni-strawberry .review-person .review-label {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    display: block !important;
+    color: #a17d85 !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    overflow-wrap: anywhere !important;
+}
+</style>
+<section class="testimoni-strawberry" id="testimoni-strawberry">
+    <div class="review-heading">
+        <div class="review-kicker">Testimoni Pelanggan</div>
+        <h2>Kata Mereka Tentang Strawberry Alfatih</h2>
+        <p>Setiap cerita pelanggan menjadi semangat kami untuk terus memberikan yang terbaik.</p>
+    </div>
+
+    <div class="review-marquee">
+<div class="review-track">
+<article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Stroberinya terlihat segar dan menarik. Cocok buat dinikmati bareng keluarga.</p>
+            <div class="review-person">
+                <div class="review-avatar">SR</div>
+                <div>
+                    <div class="review-name">Siti Rahmawati</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Suka dengan tampilannya yang segar. Bisa jadi pilihan untuk camilan di rumah.</p>
+            <div class="review-person">
+                <div class="review-avatar">MR</div>
+                <div>
+                    <div class="review-name">Muhammad Rizky</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Produknya menarik dan cocok untuk dijadikan hadiah.</p>
+            <div class="review-person">
+                <div class="review-avatar">DP</div>
+                <div>
+                    <div class="review-name">Dewi Permatasari</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Tampilannya cantik, sederhana, dan menggugah selera.</p>
+            <div class="review-person">
+                <div class="review-avatar">AF</div>
+                <div>
+                    <div class="review-name">Ahmad Fauzan</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+<article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Stroberinya terlihat segar dan menarik. Cocok buat dinikmati bareng keluarga.</p>
+            <div class="review-person">
+                <div class="review-avatar">SR</div>
+                <div>
+                    <div class="review-name">Siti Rahmawati</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Suka dengan tampilannya yang segar. Bisa jadi pilihan untuk camilan di rumah.</p>
+            <div class="review-person">
+                <div class="review-avatar">MR</div>
+                <div>
+                    <div class="review-name">Muhammad Rizky</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Produknya menarik dan cocok untuk dijadikan hadiah.</p>
+            <div class="review-person">
+                <div class="review-avatar">DP</div>
+                <div>
+                    <div class="review-name">Dewi Permatasari</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Tampilannya cantik, sederhana, dan menggugah selera.</p>
+            <div class="review-person">
+                <div class="review-avatar">AF</div>
+                <div>
+                    <div class="review-name">Ahmad Fauzan</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+</div>
+<div class="review-track reverse">
+<article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Stroberinya terlihat segar dan menarik. Cocok buat dinikmati bareng keluarga.</p>
+            <div class="review-person">
+                <div class="review-avatar">SR</div>
+                <div>
+                    <div class="review-name">Siti Rahmawati</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Suka dengan tampilannya yang segar. Bisa jadi pilihan untuk camilan di rumah.</p>
+            <div class="review-person">
+                <div class="review-avatar">MR</div>
+                <div>
+                    <div class="review-name">Muhammad Rizky</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Produknya menarik dan cocok untuk dijadikan hadiah.</p>
+            <div class="review-person">
+                <div class="review-avatar">DP</div>
+                <div>
+                    <div class="review-name">Dewi Permatasari</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Tampilannya cantik, sederhana, dan menggugah selera.</p>
+            <div class="review-person">
+                <div class="review-avatar">AF</div>
+                <div>
+                    <div class="review-name">Ahmad Fauzan</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+<article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Stroberinya terlihat segar dan menarik. Cocok buat dinikmati bareng keluarga.</p>
+            <div class="review-person">
+                <div class="review-avatar">SR</div>
+                <div>
+                    <div class="review-name">Siti Rahmawati</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Suka dengan tampilannya yang segar. Bisa jadi pilihan untuk camilan di rumah.</p>
+            <div class="review-person">
+                <div class="review-avatar">MR</div>
+                <div>
+                    <div class="review-name">Muhammad Rizky</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Produknya menarik dan cocok untuk dijadikan hadiah.</p>
+            <div class="review-person">
+                <div class="review-avatar">DP</div>
+                <div>
+                    <div class="review-name">Dewi Permatasari</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+
+        <article class="review-card">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-quote">Tampilannya cantik, sederhana, dan menggugah selera.</p>
+            <div class="review-person">
+                <div class="review-avatar">AF</div>
+                <div>
+                    <div class="review-name">Ahmad Fauzan</div>
+                    <div class="review-label">Pelanggan Strawberry Alfatih</div>
+                </div>
+            </div>
+</article>
+</div>
+</div>
+</section>
+
+<section id="lokasi-toko" class="lokasi-toko">
+    <div class="lokasi-container">
+        <div class="lokasi-heading">
+            <span class="lokasi-eyebrow">Kunjungi Toko Kami</span>
+            <h2>Temukan Strawberry Alfatih</h2>
+            <p>Datang dan temukan pilihan kue favoritmu di toko kami.</p>
+        </div>
+
+        <div class="lokasi-card">
+            <div class="lokasi-info">
+                <span class="lokasi-icon" aria-hidden="true">⌖</span>
+                <div>
+                    <h3>Alamat Toko</h3>
+                    <p>GHRV+8QX, Baringin, Lima Kaum, Kabupaten Tanah Datar, Sumatera Barat 27212</p>
+                </div>
+            </div>
+
+            <a class="lokasi-button"
+               href="https://www.google.com/maps/search/?api=1&amp;query=Strawberry%20Alfatih&amp;query_place_id=ChIJqM1MCTAt1S8RZ6Va1aW1z_w"
+               target="_blank" rel="noopener noreferrer">
+                Buka Google Maps
+                <span aria-hidden="true">↗</span>
+            </a>
+
+            <div class="lokasi-map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.690219947239!2d100.5944792!3d-0.45913190000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd52d00094cdba7%3A0xfcc5b55d5aa0ad67!2sstrawberry%20alfatih!5e0!3m2!1sen!2sid!4v1793039930346!5m2!1sen!2sid"
+                    title="Lokasi Strawberry Alfatih di Google Maps"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.lokasi-toko {
+    padding: 72px 6%;
+    background: #fffaf7;
+    color: #38231f;
+}
+.lokasi-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.lokasi-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.lokasi-eyebrow {
+    color: #a64d52;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.lokasi-heading h2 {
+    margin: 10px 0;
+    font-size: clamp(26px, 3vw, 40px);
+    line-height: 1.2;
+}
+.lokasi-heading p {
+    margin: 0;
+    color: #76635e;
+    line-height: 1.7;
+}
+.lokasi-card {
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #f0e2dc;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(74, 39, 29, .07);
+}
+.lokasi-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+.lokasi-icon {
+    color: #a64d52;
+    font-size: 30px;
+    line-height: 1;
+}
+.lokasi-info h3 {
+    margin: 0 0 7px;
+    font-size: 18px;
+}
+.lokasi-info p {
+    margin: 0;
+    color: #76635e;
+    line-height: 1.7;
+}
+.lokasi-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    margin-bottom: 22px;
+    border-radius: 8px;
+    background: #9e414b;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+.lokasi-button:hover {
+    background: #7f3039;
+}
+.lokasi-map {
+    overflow: hidden;
+    width: 100%;
+    border-radius: 14px;
+    background: #f3ece8;
+}
+.lokasi-map iframe {
+    display: block;
+    width: 100%;
+    height: 400px;
+    border: 0;
+}
+@media (max-width: 600px) {
+    .lokasi-toko {
+        padding: 46px 16px;
+    }
+    .lokasi-card {
+        padding: 16px;
+        border-radius: 14px;
+    }
+    .lokasi-map iframe {
+        height: 300px;
+    }
+    .lokasi-info p {
+        font-size: 13px;
+    }
+}
+</style>
+
+@endsection
+
+<style id="review-hover-spacing-fix">
+/* Hentikan animasi saat kursor berada di area review */
+.testimoni-strawberry .review-marquee:hover .review-track {
+    animation-play-state: paused !important;
+}
+
+/* Jarak antarkartu dibuat lebih rapat */
+.testimoni-strawberry .review-track {
+    gap: 8px !important;
+}
+
+/* Jarak antara dua baris review */
+.testimoni-strawberry .review-marquee {
+    gap: 8px !important;
+}
+</style>
+
+<style id="review-shadow-enhancement">
+.testimoni-strawberry .review-card {
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.10),
+        0 12px 28px rgba(0, 0, 0, 0.14),
+        0 0 0 1px rgba(180, 90, 40, 0.12) !important;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.testimoni-strawberry .review-card:hover {
+    box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.14),
+        0 18px 38px rgba(0, 0, 0, 0.20),
+        0 0 0 1px rgba(180, 90, 40, 0.22) !important;
+}
+</style>
+
+<style id="strawberry-katalog-background">
+#katalog {
+    position: relative;
+    isolation: isolate;
+    background:
+        radial-gradient(ellipse at 8% 12%, rgba(255, 190, 207, .65), transparent 36%),
+        radial-gradient(ellipse at 92% 82%, rgba(255, 214, 183, .55), transparent 34%),
+        linear-gradient(135deg, #fff0f4 0%, #ffe1e9 48%, #fff4e9 100%) !important;
+}
+
+#katalog::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.8) 1.5px, transparent 2px);
+    background-size: 30px 30px;
+    opacity: .45;
+}
+</style>
+
+<style id="strawberry-about-redesign">
+#tentang {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 76px 20px !important;
+    background:
+        radial-gradient(ellipse at 8% 15%, rgba(255, 174, 196, .42), transparent 38%),
+        radial-gradient(ellipse at 92% 85%, rgba(255, 218, 188, .48), transparent 36%),
+        linear-gradient(135deg, #fff5f7 0%, #ffe5ec 52%, #fff7ef 100%) !important;
+}
+
+#tentang .about-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+    align-items: center;
+    gap: 42px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 34px;
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, .78);
+    box-shadow: 0 18px 48px rgba(145, 55, 82, .13);
+    backdrop-filter: blur(8px);
+}
+
+#tentang .about-grid > img {
+    display: block;
+    width: 190px !important;
+    height: 190px !important;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50% !important;
+    border: 6px solid #fff !important;
+    outline: 2px solid #f2bdcc;
+    box-shadow: 0 12px 30px rgba(151, 52, 83, .20);
+    justify-self: center;
+}
+
+#tentang .about-grid h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: #8d2948;
+    font-size: clamp(26px, 3vw, 36px);
+}
+
+#tentang .about-grid p {
+    color: #654650;
+    line-height: 1.9;
+    font-size: 15px;
+}
+
+@media (max-width: 600px) {
+    #tentang {
+        padding: 48px 16px !important;
+    }
+
+    #tentang .about-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding: 25px 20px;
+        border-radius: 24px;
+        text-align: center;
+    }
+
+    #tentang .about-grid > img {
+        width: 145px !important;
+        height: 145px !important;
+    }
+
+    #tentang .about-grid h2 {
+        font-size: 27px;
+        margin-bottom: 12px;
+    }
+
+    #tentang .about-grid p {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+}
+</style>

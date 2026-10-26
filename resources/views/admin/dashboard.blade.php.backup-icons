@@ -1,0 +1,439 @@
+﻿
+@extends('layouts.admin')
+@section('title', 'Dashboard')
+
+@section('content')
+<style>
+.sa-dashboard,
+.sa-dashboard * {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+.sa-dashboard {
+    --wine: #781f36;
+    --wine-dark: #501426;
+    --cream: #fffaf3;
+    --muted: #8b7d7e;
+    color: #39262b;
+}
+.sa-dashboard * { box-sizing: border-box; }
+
+.sa-dashboard .dash-hero {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 22px;
+    color: #fffaf3;
+    background: linear-gradient(125deg, #501426, #842b43 65%, #a64c60);
+    margin-bottom: 24px;
+}
+.sa-dashboard .dash-hero::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 50%;
+    right: -65px;
+    top: -105px;
+    box-shadow: 0 0 0 28px rgba(255,255,255,.04),
+                0 0 0 58px rgba(255,255,255,.035);
+}
+.sa-dashboard .eyebrow {
+    margin: 0 0 9px;
+    color: #f1c8ad;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.sa-dashboard .dash-hero h1 {
+    margin: 0;
+    font-size: clamp(25px, 3vw, 34px);
+    letter-spacing: -.8px;
+    color: #fffaf3;
+}
+.sa-dashboard .hero-copy {
+    margin: 10px 0 0;
+    color: #f0dfe0;
+    font-size: 14px;
+    line-height: 1.7;
+}
+.sa-dashboard .hero-action {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+.sa-dashboard .hero-action a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 18px;
+    border-radius: 12px;
+    background: #fffaf3;
+    color: #651b30;
+    text-decoration: none;
+    font-weight: 750;
+    font-size: 13px;
+    transition: transform .2s, box-shadow .2s;
+}
+.sa-dashboard .hero-action a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px #32101b40;
+}
+
+.sa-dashboard .section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 27px 0 15px;
+}
+.sa-dashboard .section-heading h2 {
+    margin: 0;
+    color: #39262b;
+    font-size: 18px;
+    letter-spacing: -.3px;
+}
+.sa-dashboard .section-heading p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+.sa-dashboard .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+.sa-dashboard .stat-card {
+    position: relative;
+    overflow: hidden;
+    padding: 22px;
+    border: 1px solid #eee3df;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 5px 18px rgba(74, 35, 43, .035);
+    transition: transform .2s, box-shadow .2s;
+}
+.sa-dashboard .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(74, 35, 43, .08);
+}
+.sa-dashboard .stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.sa-dashboard .stat-label {
+    color: #847477;
+    font-size: 12px;
+    font-weight: 650;
+}
+.sa-dashboard .stat-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    color: #7b233b;
+    background: #f8e9e9;
+    font-size: 20px;
+    font-weight: 800;
+}
+.sa-dashboard .stat-card:nth-child(2) .stat-icon {
+    color: #287654;
+    background: #e6f4eb;
+}
+.sa-dashboard .stat-card:nth-child(3) .stat-icon {
+    color: #a56c24;
+    background: #fbf0d9;
+}
+.sa-dashboard .stat-number {
+    display: block;
+    margin-top: 18px;
+    color: #4e192b;
+    font-size: 34px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+.sa-dashboard .stat-foot {
+    margin-top: 9px;
+    color: #95878a;
+    font-size: 11px;
+}
+
+.sa-dashboard .content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    gap: 18px;
+    margin-top: 22px;
+}
+.sa-dashboard .dash-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #eee3df;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 5px 18px rgba(74, 35, 43, .035);
+}
+.sa-dashboard .panel-heading {
+    padding: 21px 22px;
+    border-bottom: 1px solid #f1e8e4;
+}
+.sa-dashboard .panel-heading h2 {
+    margin: 0;
+    color: #4e192b;
+    font-size: 15px;
+}
+.sa-dashboard .panel-heading p {
+    margin: 6px 0 0;
+    color: #95878a;
+    font-size: 11px;
+}
+.sa-dashboard .category-list {
+    padding: 5px 22px 14px;
+}
+.sa-dashboard .category-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #f5eeeb;
+    font-size: 13px;
+}
+.sa-dashboard .category-row:last-child { border-bottom: 0; }
+.sa-dashboard .category-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.sa-dashboard .category-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #a64c60;
+}
+.sa-dashboard .category-count {
+    min-width: 34px;
+    padding: 5px 9px;
+    border-radius: 9px;
+    text-align: center;
+    background: #f8eeec;
+    color: #70223a;
+    font-size: 12px;
+    font-weight: 750;
+}
+.sa-dashboard .recent-list { padding: 4px 22px 14px; }
+.sa-dashboard .recent-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f5eeeb;
+}
+.sa-dashboard .recent-row:last-child { border-bottom: 0; }
+.sa-dashboard .recent-avatar {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #f8e9e9;
+    color: #79263d;
+    font-weight: 800;
+    font-size: 16px;
+}
+.sa-dashboard .recent-info { min-width: 0; flex: 1; }
+.sa-dashboard .recent-info a {
+    display: block;
+    color: #4e192b;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 750;
+    overflow-wrap: anywhere;
+}
+.sa-dashboard .recent-info a:hover { color: #a64c60; }
+.sa-dashboard .recent-date {
+    display: block;
+    margin-top: 5px;
+    color: #95878a;
+    font-size: 11px;
+}
+.sa-dashboard .empty-state {
+    padding: 28px 10px;
+    color: #95878a;
+    text-align: center;
+    font-size: 13px;
+}
+.sa-dashboard .dash-footer {
+    margin-top: 22px;
+    padding: 16px 0 3px;
+    border-top: 1px solid #eee3df;
+    color: #95878a;
+    font-size: 11px;
+    text-align: center;
+}
+
+@media (max-width: 760px) {
+    .sa-dashboard .dash-hero {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 24px 20px;
+        border-radius: 17px;
+    }
+    .sa-dashboard .hero-action { margin-top: 2px; }
+    .sa-dashboard .stats-grid { grid-template-columns: 1fr; gap: 12px; }
+    .sa-dashboard .stat-card {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        padding: 18px;
+    }
+    .sa-dashboard .stat-top { display: contents; }
+    .sa-dashboard .stat-label { align-self: end; }
+    .sa-dashboard .stat-icon {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+    }
+    .sa-dashboard .stat-number {
+        margin-top: 8px;
+        font-size: 29px;
+    }
+    .sa-dashboard .stat-foot { grid-column: 1 / -1; }
+    .sa-dashboard .content-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="sa-dashboard">
+
+    <section class="dash-hero">
+        <div>
+            <p class="eyebrow">Strawberry Alfatih - Admin Panel</p>
+            <h1>Dashboard</h1>
+            <p class="hero-copy">
+                Kelola katalog produk Strawberry Alfatih dengan lebih mudah
+                melalui satu tempat.
+            </p>
+        </div>
+        <div class="hero-action">
+            <a href="{{ route('admin.products.create') }}">
+                <span aria-hidden="true">+</span> Tambah Produk
+            </a>
+        </div>
+    </section>
+
+    <div class="section-heading">
+        <div>
+            <h2>Ringkasan Produk</h2>
+            <p>Gambaran singkat katalog produk saat ini.</p>
+        </div>
+    </div>
+
+    <section class="stats-grid">
+        <article class="stat-card">
+            <div class="stat-top">
+                <span class="stat-label">Total Produk</span>
+                <span class="stat-icon" aria-hidden="true">P</span>
+            </div>
+            <strong class="stat-number">{{ $stats['total'] }}</strong>
+            <div class="stat-foot">Semua produk dalam katalog</div>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-top">
+                <span class="stat-label">Produk Tayang</span>
+                <span class="stat-icon" aria-hidden="true">OK</span>
+            </div>
+            <strong class="stat-number">{{ $stats['published'] }}</strong>
+            <div class="stat-foot">Produk yang ditampilkan</div>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-top">
+                <span class="stat-label">Produk Draft</span>
+                <span class="stat-icon" aria-hidden="true">D</span>
+            </div>
+            <strong class="stat-number">{{ $stats['draft'] }}</strong>
+            <div class="stat-foot">Produk yang disembunyikan</div>
+        </article>
+    </section>
+
+    <div class="section-heading">
+        <div>
+            <h2>Informasi Katalog</h2>
+            <p>Pantau kategori dan perubahan produk terbaru.</p>
+        </div>
+    </div>
+
+    <section class="content-grid">
+        <div class="dash-panel">
+            <div class="panel-heading">
+                <h2>Produk per Kategori</h2>
+                <p>Jumlah produk untuk setiap kategori.</p>
+            </div>
+
+            <div class="category-list">
+                @foreach(config('store.categories') as $c)
+                    <div class="category-row">
+                        <div class="category-name">
+                            <span class="category-dot"></span>
+                            <span>{{ $c }}</span>
+                        </div>
+                        <span class="category-count">
+                            {{ $perCategory[$c] ?? 0 }}
+                        </span>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="dash-panel">
+            <div class="panel-heading">
+                <h2>Terakhir Diubah</h2>
+                <p>Akses cepat ke produk yang baru diperbarui.</p>
+            </div>
+
+            <div class="recent-list">
+                @forelse($latest as $p)
+                    <div class="recent-row">
+                        <div class="recent-avatar" aria-hidden="true">
+                            {{ mb_strtoupper(mb_substr($p->name, 0, 1)) }}
+                        </div>
+                        <div class="recent-info">
+                            <a href="{{ route('admin.products.edit', $p) }}">
+                                {{ $p->name }}
+                            </a>
+                            <span class="recent-date">
+                                Diperbarui
+                                {{ $p->updated_at->format('d M Y') }}
+                            </span>
+                        </div>
+                    </div>
+                @empty
+                    <div class="empty-state">
+                        Belum ada produk yang diperbarui.
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <footer class="dash-footer">
+        Strawberry Alfatih - Panel Pengelolaan Produk
+    </footer>
+
+</div>
+@endsection
+
+

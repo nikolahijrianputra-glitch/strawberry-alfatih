@@ -1,0 +1,364 @@
+<style>
+html {
+    scroll-behavior: smooth;
+}
+</style>
+@extends('layouts.app')
+@section('content')
+<section class="hero" id="beranda">
+  
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <span class="eyebrow">Strawberry Alfatih Cake & Dessert</span>
+      <h1>Manis untuk Setiap Momen</h1>
+      <p>Cake, cheesecake, brownies, dan shortcake dengan stroberi segar - dibuat untuk ulang tahun, kejutan, dan hari-hari yang ingin kamu rayakan.</p>
+      <div class="hero-btns">
+        <a href="#katalog" class="btn btn-primary">Lihat Katalog</a>
+        <a href="{{ \App\Support\Whatsapp::url('Halo Strawberry Alfatih, saya ingin bertanya dan memesan kue.') }}" target="_blank" rel="noopener" class="btn btn-outline">Pesan via WhatsApp</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="{{ asset('assets/img/hero.jpg') }}" alt="Burn Cheesecake dengan topping stroberi segar" width="274" height="324" fetchpriority="high">
+    </div>
+  </div>
+</section>
+<section class="stats-section">
+    <div class="stats-container">
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="500">0</span>+</h2>
+            <p>Pelanggan Puas</p>
+        </div>
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="20">0</span>+</h2>
+            <p>Varian Kue</p>
+        </div>
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="1000">0</span>+</h2>
+            <p>Pesanan Selesai</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.stats-section {
+    background: #fff4f6;
+    padding: 38px 20px;
+}
+.stats-container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    gap: 20px;
+}
+.stat-item {
+    padding: 12px;
+}
+.stat-item h2 {
+    color: #b52d55;
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 0 0 8px;
+    font-weight: 800;
+}
+.stat-item p {
+    color: #65434d;
+    margin: 0;
+    font-size: 15px;
+}
+@media (max-width: 600px) {
+    .stats-container { gap: 6px; }
+    .stat-item { padding: 8px 2px; }
+    .stat-item p { font-size: 12px; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const stats = document.querySelector('.stats-section');
+    if (!stats) return;
+
+    const counters = stats.querySelectorAll('.count-up');
+    let hasAnimated = false;
+
+    function animateCounters() {
+        counters.forEach(function (el) {
+            const target = Number(el.dataset.target);
+            const duration = 1600;
+            const startTime = performance.now();
+
+            function update(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+
+                el.textContent = Math.floor(target * eased).toLocaleString('id-ID');
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString('id-ID');
+                }
+            }
+
+            el.textContent = '0';
+            requestAnimationFrame(update);
+        });
+    }
+
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                animateCounters();
+                observer.unobserve(stats);
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    observer.observe(stats);
+});
+</script>
+
+<section class="section" id="katalog">
+  <div class="container">
+    <div class="section-head">
+      <h2>Favorit Pelanggan</h2>
+      <p>Pilihan kue yang paling sering dipesan. Pilih kategori, lalu pesan langsung lewat WhatsApp.</p>
+    </div>
+    <div class="tools">
+      <div class="filters" role="group" aria-label="Filter kategori">
+        @foreach(array_merge(['Semua'], $categories) as $c)
+          @php($on = ($c === 'Semua' && !$active) || $c === $active)
+          <a class="chip {{ $on ? 'active' : '' }}" aria-pressed="{{ $on ? 'true' : 'false' }}"
+             href="{{ route('home', array_filter(['kategori' => $c === 'Semua' ? null : $c, 'q' => $q ?: null])) }}#katalog">{{ $c }}</a>
+        @endforeach
+      </div>
+      <form class="search" method="GET" action="{{ route('home') }}#katalog" role="search">
+        @if($active)<input type="hidden" name="kategori" value="{{ $active }}">@endif
+        <label class="sr-only" for="search">Cari produk</label>
+        <input type="search" id="search" name="q" value="{{ $q }}" placeholder="Cari produkâ€¦" autocomplete="off" maxlength="60">
+      </form>
+    </div>
+    <div class="grid">
+      @foreach($products as $product)
+        @include('partials.product-card', ['product' => $product])
+      @endforeach
+    </div>
+    @if($products->isEmpty())
+      <p class="empty">Produk tidak ditemukan. Coba kata kunci atau kategori lain.</p>
+    @endif
+    <p class="note">Harga dapat berubah sewaktu-waktu. Konfirmasi harga & ketersediaan via WhatsApp.</p>
+  </div>
+</section>
+<section class="stats-section">
+    <div class="stats-container">
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="500">0</span>+</h2>
+            <p>Pelanggan Puas</p>
+        </div>
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="20">0</span>+</h2>
+            <p>Varian Kue</p>
+        </div>
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="1000">0</span>+</h2>
+            <p>Pesanan Selesai</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.stats-section {
+    background: #fff4f6;
+    padding: 38px 20px;
+}
+.stats-container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    gap: 20px;
+}
+.stat-item {
+    padding: 12px;
+}
+.stat-item h2 {
+    color: #b52d55;
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 0 0 8px;
+    font-weight: 800;
+}
+.stat-item p {
+    color: #65434d;
+    margin: 0;
+    font-size: 15px;
+}
+@media (max-width: 600px) {
+    .stats-container { gap: 6px; }
+    .stat-item { padding: 8px 2px; }
+    .stat-item p { font-size: 12px; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const stats = document.querySelector('.stats-section');
+    if (!stats) return;
+
+    const counters = stats.querySelectorAll('.count-up');
+    let hasAnimated = false;
+
+    function animateCounters() {
+        counters.forEach(function (el) {
+            const target = Number(el.dataset.target);
+            const duration = 1600;
+            const startTime = performance.now();
+
+            function update(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+
+                el.textContent = Math.floor(target * eased).toLocaleString('id-ID');
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString('id-ID');
+                }
+            }
+
+            el.textContent = '0';
+            requestAnimationFrame(update);
+        });
+    }
+
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                animateCounters();
+                observer.unobserve(stats);
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    observer.observe(stats);
+});
+</script>
+
+<section class="section about" id="tentang">
+  <div class="container about-grid">
+    <img src="{{ asset('assets/img/brand/logo-circle.jpg') }}" alt="Papan logo Strawberry Alfatih Cake & Dessert" width="280" height="297" loading="lazy">
+    <div>
+      <h2>Tentang Kami</h2>
+      <p>Strawberry Alfatih adalah toko cake & dessert yang menyajikan cheesecake, shortcake, brownies, dan kue custom dengan sentuhan stroberi. Setiap kue dapat diberi tulisan ucapan sesuai momen spesialmu.</p>
+      <p>Untuk request desain, tulisan ucapan, atau pesanan khusus, hubungi kami lewat WhatsApp.</p>
+    </div>
+  </div>
+</section>
+<section class="stats-section">
+    <div class="stats-container">
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="500">0</span>+</h2>
+            <p>Pelanggan Puas</p>
+        </div>
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="20">0</span>+</h2>
+            <p>Varian Kue</p>
+        </div>
+        <div class="stat-item">
+            <h2><span class="count-up" data-target="1000">0</span>+</h2>
+            <p>Pesanan Selesai</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.stats-section {
+    background: #fff4f6;
+    padding: 38px 20px;
+}
+.stats-container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    gap: 20px;
+}
+.stat-item {
+    padding: 12px;
+}
+.stat-item h2 {
+    color: #b52d55;
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 0 0 8px;
+    font-weight: 800;
+}
+.stat-item p {
+    color: #65434d;
+    margin: 0;
+    font-size: 15px;
+}
+@media (max-width: 600px) {
+    .stats-container { gap: 6px; }
+    .stat-item { padding: 8px 2px; }
+    .stat-item p { font-size: 12px; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const stats = document.querySelector('.stats-section');
+    if (!stats) return;
+
+    const counters = stats.querySelectorAll('.count-up');
+    let hasAnimated = false;
+
+    function animateCounters() {
+        counters.forEach(function (el) {
+            const target = Number(el.dataset.target);
+            const duration = 1600;
+            const startTime = performance.now();
+
+            function update(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+
+                el.textContent = Math.floor(target * eased).toLocaleString('id-ID');
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString('id-ID');
+                }
+            }
+
+            el.textContent = '0';
+            requestAnimationFrame(update);
+        });
+    }
+
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                animateCounters();
+                observer.unobserve(stats);
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    observer.observe(stats);
+});
+</script>
+@endsection
+
+

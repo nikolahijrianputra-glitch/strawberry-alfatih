@@ -1,0 +1,39 @@
+﻿@extends('layouts.app')
+
+@section('title', 'Katalog Produk - Strawberry Alfatih')
+
+@section('content')
+<section class="section katalog-soft" id="katalog">
+  <div class="container">
+    <div class="section-head">
+      <h2>Favorit Pelanggan</h2>
+      <p>Pilihan kue yang paling sering dipesan. Pilih kategori, lalu pesan langsung lewat WhatsApp.</p>
+    </div>
+    <div class="tools">
+      <div class="filters" role="group" aria-label="Filter kategori">
+        @foreach(array_merge(['Semua'], $categories) as $c)
+          @php($on = ($c === 'Semua' && !$active) || $c === $active)
+          <a class="chip {{ $on ? 'active' : '' }}" aria-pressed="{{ $on ? 'true' : 'false' }}"
+             href="{{ route('katalog', array_filter(['kategori' => $c === 'Semua' ? null : $c, 'q' => $q ?: null])) }}#katalog">{{ $c }}</a>
+        @endforeach
+      </div>
+      <form class="search" method="GET" action="{{ route('katalog') }}" role="search">
+        @if($active)<input type="hidden" name="kategori" value="{{ $active }}">@endif
+        <label class="sr-only" for="search">Cari produk</label>
+        <input type="search" id="search" name="q" value="{{ $q }}" placeholder="Cari produk..." autocomplete="off" maxlength="60">
+      </form>
+    </div>
+    <div class="grid">
+      @foreach($products as $product)
+        @include('partials.product-card', ['product' => $product])
+      @endforeach
+    </div>
+    @if($products->isEmpty())
+      <p class="empty">Produk tidak ditemukan. Coba kata kunci atau kategori lain.</p>
+    @endif
+    <p class="note">Harga dapat berubah sewaktu-waktu. Konfirmasi harga & ketersediaan via WhatsApp.</p>
+  </div>
+</section>
+
+@endsection
+

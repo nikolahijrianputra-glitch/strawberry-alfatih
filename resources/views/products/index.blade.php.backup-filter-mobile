@@ -1,0 +1,156 @@
+@extends('layouts.app')
+
+@section('title', 'Katalog Produk - Strawberry Alfatih')
+
+@section('content')
+<style>
+/* Strawberry Alfatih - katalog estetik */
+.katalog-soft {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 8% 12%, rgba(255, 190, 205, .42), transparent 34%),
+        radial-gradient(ellipse at 92% 42%, rgba(255, 222, 190, .48), transparent 32%),
+        radial-gradient(ellipse at 45% 100%, rgba(255, 214, 224, .48), transparent 40%),
+        linear-gradient(145deg, #fffaf5 0%, #fff1f4 48%, #fff8ed 100%);
+    padding-top: clamp(48px, 7vw, 88px);
+    padding-bottom: clamp(55px, 8vw, 100px);
+}
+
+.katalog-soft::before,
+.katalog-soft::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+.katalog-soft::before {
+    width: 290px;
+    height: 290px;
+    top: 110px;
+    left: -150px;
+    border: 1px solid rgba(207, 55, 86, .12);
+    box-shadow:
+        0 0 0 28px rgba(207, 55, 86, .025),
+        0 0 0 58px rgba(207, 55, 86, .02);
+}
+
+.katalog-soft::after {
+    width: 360px;
+    height: 360px;
+    right: -190px;
+    bottom: 50px;
+    border: 1px solid rgba(207, 55, 86, .12);
+    box-shadow:
+        0 0 0 32px rgba(207, 55, 86, .025),
+        0 0 0 65px rgba(207, 55, 86, .02);
+}
+
+.katalog-soft .card {
+    border: 1px solid rgba(190, 75, 98, .10);
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 8px 28px rgba(115, 45, 61, .07);
+    transition: transform .28s ease, box-shadow .28s ease;
+}
+
+.katalog-soft .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(150, 48, 72, .14);
+}
+
+.katalog-soft .card-img {
+    background: linear-gradient(135deg, #fff0f3, #fff7eb);
+}
+
+.katalog-soft .tag {
+    border-radius: 999px;
+}
+
+.katalog-soft .price {
+    color: #bd294b;
+    font-weight: 800;
+}
+
+.katalog-soft .btn-primary {
+    border-radius: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .katalog-soft .card {
+        transition: none;
+    }
+    .katalog-soft .card:hover {
+        transform: none;
+    }
+}
+</style>
+<section class="section katalog-soft" id="katalog">
+  <div class="container">
+    <div class="section-head">
+      <h2>Favorit Pelanggan</h2>
+      <p>Pilihan kue yang paling sering dipesan. Pilih kategori, lalu pesan langsung lewat WhatsApp.</p>
+    </div>
+    <div class="tools">
+      <div class="filters" role="group" aria-label="Filter kategori">
+        @foreach(array_merge(['Semua'], $categories) as $c)
+          @php($on = ($c === 'Semua' && !$active) || $c === $active)
+          <a class="chip {{ $on ? 'active' : '' }}" aria-pressed="{{ $on ? 'true' : 'false' }}"
+             href="{{ route('katalog', array_filter(['kategori' => $c === 'Semua' ? null : $c, 'q' => $q ?: null])) }}#katalog">{{ $c }}</a>
+        @endforeach
+      </div>
+      <form class="search" method="GET" action="{{ route('katalog') }}" role="search">
+        @if($active)<input type="hidden" name="kategori" value="{{ $active }}">@endif
+        <label class="sr-only" for="search">Cari produk</label>
+        <input type="search" id="search" name="q" value="{{ $q }}" placeholder="Cari produk..." autocomplete="off" maxlength="60">
+      </form>
+    </div>
+    <div class="grid">
+      @foreach($products as $product)
+        @include('partials.product-card', ['product' => $product])
+      @endforeach
+    </div>
+    @if($products->isEmpty())
+      <p class="empty">Produk tidak ditemukan. Coba kata kunci atau kategori lain.</p>
+    @endif
+    <p class="note">Harga dapat berubah sewaktu-waktu. Konfirmasi harga & ketersediaan via WhatsApp.</p>
+  </div>
+</section>
+
+@endsection
+
+
+
+<style id="strawberry-katalog-background">
+.katalog-soft {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 8% 15%, rgba(255, 139, 171, .32), transparent 38%),
+        radial-gradient(ellipse at 92% 78%, rgba(255, 190, 150, .34), transparent 36%),
+        linear-gradient(135deg, #ffe3eb 0%, #fff0f4 48%, #ffe8d8 100%) !important;
+}
+
+.katalog-soft::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.95) 1.5px, transparent 2px);
+    background-size: 32px 32px;
+    opacity: .55;
+}
+
+.katalog-soft .container {
+    position: relative;
+    z-index: 1;
+}
+</style>

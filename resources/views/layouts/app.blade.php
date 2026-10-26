@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@yield('title', 'Strawberry Alfatih - Kue dan Hidangan Manis')</title>
+<meta name="description" content="@yield('description', 'Katalog cake, cheesecake, brownies, dan shortcake Strawberry Alfatih. Pesan mudah lewat WhatsApp.')">
+<link rel="icon" href="{{ asset('assets/img/brand/logo-circle.jpg') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+@php($wa = \App\Support\Whatsapp::url('Halo Strawberry Alfatih, saya ingin bertanya dan memesan kue.'))
+<header class="navbar luxury-navbar" id="top">
+  <div class="container nav-inner">
+    <a href="{{ route('home') }}" class="brand luxury-brand"><img src="{{ asset('assets/img/brand/logo-circle.jpg') }}" alt="Logo asli Strawberry Alfatih" width="52" height="52"><span><strong>Strawberry</strong><em>Alfatih</em><small>CAKE &amp; DESSERT</small></span></a>
+    <nav id="menu" class="menu" aria-label="Navigasi utama">
+      <a href="{{ route('home') }}">Beranda</a><a href="{{ route('katalog') }}">Katalog</a><a href="{{ route('home') }}#tentang">Tentang Kami</a><a href="#kontak">Kontak</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="{{ route('admin.login') }}" class="btn btn-admin btn-sm admin-icon-only" aria-label="Login admin" title="Login admin">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"></circle>
+          <circle cx="12" cy="9" r="3"></circle>
+          <path d="M6.8 18a5.7 5.7 0 0 1 10.4 0"></path>
+        </svg>
+      </a>
+      <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-bottom-nav" aria-label="Navigasi mobile">
+  <a href="{{ route('home') }}" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
+    <span>Beranda</span>
+  </a>
+  <a href="{{ route('katalog') }}" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M10 4v16"/></svg>
+    <span>Katalog</span>
+  </a>
+  <a href="{{ route('home') }}#tentang" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+    <span>Tentang</span>
+  </a>
+  <a href="#kontak" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+    <span>Kontak</span>
+  </a>
+</nav>
+
+<main>@yield('content')</main>
+
+<footer class="footer" id="kontak">
+  <div class="container foot-grid">
+    <div>
+      <a href="{{ route('home') }}" class="brand footer-brand">
+    <img src="{{ asset('assets/img/brand/logo-circle.jpg') }}" alt="Strawberry Alfatih">
+    <span>
+        <strong>Strawberry <em>Alfatih</em></strong>
+        <small>CAKE &amp; DESSERT</small>
+    </span>
+</a>
+      <p>Cake & Dessert untuk setiap momen manis.</p>
+      <p class="footer-alamat">
+        <span aria-hidden="true">📍</span>
+        <span>Malana Ponco, Batusangkar</span>
+      </p>
+    </div>
+    <div><h3>Jelajahi</h3><a href="{{ route('home') }}">Beranda</a><a href="{{ route('katalog') }}">Katalog</a><a href="{{ route('home') }}#tentang">Tentang Kami</a><a href="#kontak">Kontak</a></div>
+    <div><h3>Kontak</h3>
+      <a href="{{ $wa }}" target="_blank" rel="noopener">WhatsApp: {{ \App\Support\Whatsapp::display() }}</a>
+      @if(config('store.address'))<p>{{ config('store.address') }}</p>@endif
+      @if(config('store.maps_url'))<a href="{{ config('store.maps_url') }}" target="_blank" rel="noopener">Lihat di Google Maps</a>@endif
+<p class="footer-instagram">
+    Instagram:
+    <a href="https://www.instagram.com/strawberryalfatih/"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Instagram Strawberry Alfatih">
+       @strawberryalfatih
+    </a>
+</p>
+</div>
+  </div>
+  <div class="container copy">&copy; {{ date('Y') }} Strawberry Alfatih. Hak cipta dilindungi.</div>
+</footer>
+<script src="{{ asset('js/app.js') }}" defer></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
