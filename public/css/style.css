@@ -1,4 +1,4 @@
-﻿:root{--pink:#fde4ea;--pink-2:#f9c9d6;--cream:#fff8f1;--red:#d6264b;--red-d:#b81c3d;--ink:#3b2a2f;--muted:#7d6a70;--line:#f0d9de;--gold:#b9863a}
+:root{--pink:#fde4ea;--pink-2:#f9c9d6;--cream:#fff8f1;--red:#d6264b;--red-d:#b81c3d;--ink:#3b2a2f;--muted:#7d6a70;--line:#f0d9de;--gold:#b9863a}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{font-family:Poppins,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;overflow-x:hidden}
@@ -125,7 +125,7 @@ a.chip{display:inline-block}
 .btn-admin{gap:8px;background:linear-gradient(135deg,#a51c3d,#76132c);color:#fff;border:1px solid #b94c65;box-shadow:0 7px 18px rgba(143,24,52,.2);border-radius:999px;padding:11px 22px}
 .btn-admin:hover{background:linear-gradient(135deg,#86162f,#5f0c21);box-shadow:0 10px 22px rgba(143,24,52,.28)}
 .stats-luxury{position:relative;isolation:isolate;overflow:hidden;padding:34px 0 42px;background:radial-gradient(ellipse at top,#541322 0%,#2a0911 62%,#19070b 100%);color:#fff}
-.stats-luxury:before,.stats-luxury:after{content:"âœ§";position:absolute;z-index:-1;color:rgba(232,91,119,.2);font-size:9rem;line-height:1;top:15px}
+.stats-luxury:before,.stats-luxury:after{content:"✧";position:absolute;z-index:-1;color:rgba(232,91,119,.2);font-size:9rem;line-height:1;top:15px}
 .stats-luxury:before{left:2%}.stats-luxury:after{right:2%}
 .stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
 .stat-card{min-height:174px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;padding:22px 14px;border:1px solid rgba(230,91,119,.45);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));box-shadow:inset 0 1px 0 rgba(255,255,255,.04);transition:transform .25s,border-color .25s}
@@ -1344,4 +1344,382 @@ button,
     body {
         padding-bottom: 76px;
     }
+}
+
+/* ===== PERAPIAN KATALOG STRAWBERRY ALFATIH ===== */
+#katalog.katalog-soft {
+    padding-top: 42px;
+    padding-bottom: 64px;
+}
+
+#katalog.katalog-soft > .container {
+    width: min(1240px, calc(100% - 48px));
+    max-width: 1240px;
+    margin-inline: auto;
+}
+
+#katalog.katalog-soft .section-head {
+    margin-bottom: 28px;
+}
+
+#katalog.katalog-soft .tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+#katalog.katalog-soft .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-width: 0;
+}
+
+#katalog.katalog-soft .chip {
+    padding: 10px 19px;
+    white-space: nowrap;
+}
+
+#katalog.katalog-soft .search {
+    flex: 0 1 280px;
+    min-width: 200px;
+}
+
+#katalog.katalog-soft .search input {
+    width: 100%;
+    min-height: 48px;
+    box-sizing: border-box;
+}
+
+#katalog.katalog-soft .grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+    justify-content: start;
+    width: 100%;
+}
+
+#katalog.katalog-soft .card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+#katalog.katalog-soft .card-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    flex: 0 0 auto;
+    overflow: hidden;
+}
+
+#katalog.katalog-soft .card-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#katalog.katalog-soft .card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 18px;
+}
+
+#katalog.katalog-soft .card h3 {
+    min-height: 2.6em;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+#katalog.katalog-soft .price {
+    margin-top: auto;
+    padding-top: 12px;
+    margin-bottom: 4px;
+}
+
+#katalog.katalog-soft .card .btn-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    box-sizing: border-box;
+    margin-top: 4px;
+}
+
+#katalog.katalog-soft .note {
+    margin-top: 30px;
+}
+
+@media (max-width: 1050px) {
+    #katalog.katalog-soft .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    #katalog.katalog-soft .tools {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #katalog.katalog-soft .search {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    #katalog.katalog-soft {
+        padding-top: 30px;
+        padding-bottom: 44px;
+    }
+
+    #katalog.katalog-soft > .container {
+        width: calc(100% - 28px);
+    }
+
+    #katalog.katalog-soft .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    #katalog.katalog-soft .card {
+        border-radius: 16px;
+    }
+
+    #katalog.katalog-soft .card-body {
+        padding: 12px;
+        gap: 7px;
+    }
+
+    #katalog.katalog-soft .card h3 {
+        font-size: .95rem;
+        min-height: 2.6em;
+    }
+
+    #katalog.katalog-soft .price {
+        font-size: .98rem;
+    }
+
+    #katalog.katalog-soft .card .btn-block {
+        min-height: 43px;
+        padding: 8px;
+    }
+
+    #katalog.katalog-soft .filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 6px;
+    }
+
+    #katalog.katalog-soft .chip {
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 380px) {
+    #katalog.katalog-soft .grid {
+        gap: 10px;
+    }
+
+    #katalog.katalog-soft .card-body {
+        padding: 10px;
+    }
+}
+/* ===== AKHIR PERAPIAN KATALOG ===== */
+
+
+
+
+
+
+/* KATALOG KOMPAK - SESUAI REFERENSI */
+#katalog.katalog-soft > .container {
+    width: min(1240px, calc(100% - 40px));
+    max-width: 1240px;
+}
+#katalog.katalog-soft .grid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    align-items: stretch;
+    justify-content: start;
+    width: 100%;
+}
+#katalog.katalog-soft .card {
+    width: 100% !important;
+    min-width: 0;
+    margin: 0 !important;
+    border-radius: 10px;
+    overflow: hidden;
+}
+#katalog.katalog-soft .card-img {
+    width: 100%;
+    height: auto !important;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+}
+#katalog.katalog-soft .card-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#katalog.katalog-soft .card-body {
+    padding: 9px 10px 10px;
+}
+#katalog.katalog-soft .card h3 {
+    font-size: 13px;
+    line-height: 1.35;
+    margin: 5px 0;
+}
+#katalog.katalog-soft .card .tag {
+    font-size: 10px;
+}
+#katalog.katalog-soft .card .price {
+    font-size: 12px;
+    margin-top: 5px;
+}
+@media (max-width: 1050px) {
+    #katalog.katalog-soft .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+@media (max-width: 600px) {
+    #katalog.katalog-soft > .container {
+        width: calc(100% - 24px);
+    }
+    #katalog.katalog-soft .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+    #katalog.katalog-soft .card-body {
+        padding: 8px;
+    }
+    #katalog.katalog-soft .card h3 {
+        font-size: 12px;
+    }
+}
+/* AKHIR KATALOG KOMPAK */
+
+
+
+/* KARTU PRODUK - REFERENSI STRAWBERRY ALFATIH */
+#katalog.katalog-soft .grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+}
+
+#katalog.katalog-soft .card {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    border: 1px solid #eee8e5 !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    box-shadow: 0 2px 8px rgba(60, 40, 35, .05) !important;
+}
+
+#katalog.katalog-soft .card-img {
+    width: 100% !important;
+    aspect-ratio: 4 / 3 !important;
+    overflow: hidden !important;
+}
+
+#katalog.katalog-soft .card-img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+#katalog.katalog-soft .card-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 7px !important;
+    padding: 10px !important;
+}
+
+#katalog.katalog-soft .card h3 {
+    min-height: 0 !important;
+    margin: 0 !important;
+    color: #302b29 !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+}
+
+#katalog.katalog-soft .product-card-bottom {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+}
+
+#katalog.katalog-soft .product-card-bottom .price {
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #39312f !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+}
+
+#katalog.katalog-soft .product-add {
+    display: inline-flex !important;
+    flex: 0 0 28px !important;
+    width: 28px !important;
+    height: 28px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: #e85d7e !important;
+    color: #fff !important;
+    font-size: 21px !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+}
+
+@media (max-width: 1050px) {
+    #katalog.katalog-soft .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 600px) {
+    #katalog.katalog-soft .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+
+    #katalog.katalog-soft .card-body {
+        padding: 8px !important;
+    }
+
+    #katalog.katalog-soft .card h3 {
+        font-size: 12px !important;
+    }
+
+    #katalog.katalog-soft .product-add {
+        flex-basis: 25px !important;
+        width: 25px !important;
+        height: 25px !important;
+    }
+}
+/* AKHIR KARTU PRODUK REFERENSI */
+
+/* Sembunyikan scrollbar filter kategori (tetap bisa digeser) */
+#katalog.katalog-soft .filters {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+#katalog.katalog-soft .filters::-webkit-scrollbar {
+    display: none;
 }

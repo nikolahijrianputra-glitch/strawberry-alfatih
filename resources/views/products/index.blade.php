@@ -4,89 +4,254 @@
 
 @section('content')
 <style>
-/* Strawberry Alfatih - katalog estetik */
+/* KATALOG BARU STRAWBERRY ALFATIH */
 .katalog-soft {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    background:
-        radial-gradient(ellipse at 8% 12%, rgba(255, 190, 205, .42), transparent 34%),
-        radial-gradient(ellipse at 92% 42%, rgba(255, 222, 190, .48), transparent 32%),
-        radial-gradient(ellipse at 45% 100%, rgba(255, 214, 224, .48), transparent 40%),
-        linear-gradient(145deg, #fffaf5 0%, #fff1f4 48%, #fff8ed 100%);
-    padding-top: clamp(48px, 7vw, 88px);
-    padding-bottom: clamp(55px, 8vw, 100px);
+    background: #fffaf8 !important;
+    padding: 55px 0 70px !important;
+    color: #46363a;
 }
 
-.katalog-soft::before,
-.katalog-soft::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    pointer-events: none;
-    border-radius: 50%;
-    filter: blur(2px);
+.katalog-soft .container {
+    max-width: 1280px;
+    width: calc(100% - 36px);
+    margin: 0 auto;
 }
 
-.katalog-soft::before {
-    width: 290px;
-    height: 290px;
-    top: 110px;
-    left: -150px;
-    border: 1px solid rgba(207, 55, 86, .12);
-    box-shadow:
-        0 0 0 28px rgba(207, 55, 86, .025),
-        0 0 0 58px rgba(207, 55, 86, .02);
+.katalog-soft .section-head {
+    text-align: center;
+    margin-bottom: 35px;
 }
 
-.katalog-soft::after {
-    width: 360px;
-    height: 360px;
-    right: -190px;
-    bottom: 50px;
-    border: 1px solid rgba(207, 55, 86, .12);
-    box-shadow:
-        0 0 0 32px rgba(207, 55, 86, .025),
-        0 0 0 65px rgba(207, 55, 86, .02);
+.katalog-soft .section-head h2 {
+    color: #7c3048;
+    font-size: clamp(27px, 3vw, 38px);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.katalog-soft .section-head p {
+    color: #8c777b;
+    font-size: 14px;
+}
+
+.katalog-soft .tools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 28px;
+}
+
+.katalog-soft .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.katalog-soft .chip {
+    display: inline-flex;
+    padding: 9px 15px;
+    border: 1px solid #f0dce1;
+    border-radius: 30px;
+    background: white;
+    color: #8b5262;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.katalog-soft .chip.active {
+    background: #a63f5d;
+    border-color: #a63f5d;
+    color: white;
+}
+
+.katalog-soft .search {
+    flex: 0 1 260px;
+}
+
+.katalog-soft .search input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 11px 15px;
+    border: 1px solid #ead9de;
+    border-radius: 25px;
+    background: white;
+    outline-color: #c96b85;
+}
+
+.katalog-soft .grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+    align-items: stretch;
 }
 
 .katalog-soft .card {
-    border: 1px solid rgba(190, 75, 98, .10);
-    border-radius: 20px;
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0;
+    height: 100%;
     overflow: hidden;
-    background: rgba(255, 255, 255, .92);
-    box-shadow: 0 8px 28px rgba(115, 45, 61, .07);
-    transition: transform .28s ease, box-shadow .28s ease;
+    border: 1px solid #f0e5e7 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    box-shadow: 0 4px 16px rgba(90, 40, 55, .055) !important;
+    transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .katalog-soft .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 36px rgba(150, 48, 72, .14);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(90, 40, 55, .12) !important;
 }
 
 .katalog-soft .card-img {
-    background: linear-gradient(135deg, #fff0f3, #fff7eb);
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f9edef;
+    border-radius: 0 !important;
+}
+
+.katalog-soft .card-img img {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.katalog-soft .card-img .ph {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+}
+
+.katalog-soft .card-body {
+    display: flex !important;
+    flex: 1;
+    flex-direction: column !important;
+    align-items: stretch;
+    gap: 9px;
+    padding: 15px !important;
 }
 
 .katalog-soft .tag {
-    border-radius: 999px;
+    align-self: flex-start;
+    padding: 5px 9px;
+    border-radius: 5px !important;
+    background: #fff1f3;
+    color: #a14c64;
+    font-size: 11px;
+}
+
+.katalog-soft .card h3 {
+    margin: 0;
+    color: #51343d;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 600;
 }
 
 .katalog-soft .price {
-    color: #bd294b;
-    font-weight: 800;
+    margin-top: auto;
+    padding-top: 8px;
+    color: #a63f5d !important;
+    font-size: 15px;
+    font-weight: 700;
 }
 
-.katalog-soft .btn-primary {
-    border-radius: 12px;
+.katalog-soft .card .btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    padding: 11px;
+    border: 0;
+    border-radius: 8px !important;
+    background: #a63f5d !important;
+    color: white !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.katalog-soft .card .btn-primary:hover {
+    background: #853049 !important;
+}
+
+.katalog-soft .empty,
+.katalog-soft .note {
+    color: #8c777b;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 25px;
+}
+
+@media (min-width: 701px) and (max-width: 1050px) {
+    .katalog-soft .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 16px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .katalog-soft {
+        padding: 35px 0 45px !important;
+    }
+
+    .katalog-soft .container {
+        width: calc(100% - 24px);
+    }
+
+    .katalog-soft .section-head {
+        margin-bottom: 24px;
+    }
+
+    .katalog-soft .tools {
+        align-items: stretch;
+    }
+
+    .katalog-soft .search {
+        flex-basis: 100%;
+    }
+
+    .katalog-soft .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    .katalog-soft .card {
+        border-radius: 10px !important;
+    }
+
+    .katalog-soft .card-body {
+        padding: 10px !important;
+        gap: 7px;
+    }
+
+    .katalog-soft .card h3 {
+        font-size: 13px;
+    }
+
+    .katalog-soft .price {
+        font-size: 13px;
+    }
+
+    .katalog-soft .card .btn-primary {
+        padding: 9px 5px;
+        font-size: 12px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .katalog-soft .card {
         transition: none;
-    }
-    .katalog-soft .card:hover {
-        transform: none;
     }
 }
 </style>
@@ -125,88 +290,3 @@
 @endsection
 
 
-
-<style id="strawberry-katalog-background">
-.katalog-soft {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    background:
-        radial-gradient(ellipse at 8% 15%, rgba(255, 139, 171, .32), transparent 38%),
-        radial-gradient(ellipse at 92% 78%, rgba(255, 190, 150, .34), transparent 36%),
-        linear-gradient(135deg, #ffe3eb 0%, #fff0f4 48%, #ffe8d8 100%) !important;
-}
-
-.katalog-soft::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image:
-        radial-gradient(circle, rgba(255,255,255,.95) 1.5px, transparent 2px);
-    background-size: 32px 32px;
-    opacity: .55;
-}
-
-.katalog-soft .container {
-    position: relative;
-    z-index: 1;
-}
-</style>
-
-<style id="katalog-filter-mobile-fix">
-@media (max-width: 600px) {
-    #katalog .section-head,
-    #katalog .category-filter,
-    #katalog .kategori-filter,
-    #katalog .filter-kategori {
-        border-bottom: none !important;
-        box-shadow: none !important;
-    }
-
-    #katalog .category-filter,
-    #katalog .kategori-filter,
-    #katalog .filter-kategori {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 8px;
-        overflow-x: auto;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        border: none !important;
-        outline: none !important;
-    }
-
-    #katalog .category-filter::-webkit-scrollbar,
-    #katalog .kategori-filter::-webkit-scrollbar,
-    #katalog .filter-kategori::-webkit-scrollbar {
-        display: none;
-    }
-
-    #katalog .category-filter a,
-    #katalog .kategori-filter a,
-    #katalog .filter-kategori a {
-        flex-shrink: 0;
-        text-decoration: none;
-    }
-}
-</style>
-
-<style id="hide-katalog-scrollbar">
-@media (max-width: 600px) {
-    #katalog {
-        scrollbar-width: none;
-    }
-
-    #katalog * {
-        scrollbar-width: none;
-    }
-
-    #katalog *::-webkit-scrollbar {
-        display: none !important;
-        width: 0 !important;
-        height: 0 !important;
-    }
-}
-</style>

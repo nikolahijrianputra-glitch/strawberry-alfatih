@@ -4,10 +4,7 @@
 
 @section('content')
 <style>
-.sa-dashboard,
-.sa-dashboard * {
-    font-family: Arial, Helvetica, sans-serif !important;
-}
+
 .sa-dashboard {
     --wine: #781f36;
     --wine-dark: #501426;
@@ -392,7 +389,7 @@
         <article class="stat-card">
             <div class="stat-top">
                 <span class="stat-label">Total Produk</span>
-                <span class="stat-icon"><i data-lucide="package"></i></span><span></span><span></span><span></span></span>
+                <span class="stat-icon"><i data-lucide="package"></i></span>
             </div>
             <strong class="stat-number">{{ $stats['total'] }}</strong>
             <div class="stat-foot">Semua produk dalam katalog</div>
@@ -401,7 +398,7 @@
         <article class="stat-card">
             <div class="stat-top">
                 <span class="stat-label">Produk Tayang</span>
-                <span class="stat-icon"><i data-lucide="eye"></i></span></span>
+                <span class="stat-icon"><i data-lucide="eye"></i></span>
             </div>
             <strong class="stat-number">{{ $stats['published'] }}</strong>
             <div class="stat-foot">Produk yang ditampilkan</div>
@@ -410,7 +407,7 @@
         <article class="stat-card">
             <div class="stat-top">
                 <span class="stat-label">Produk Draft</span>
-                <span class="stat-icon"><i data-lucide="file-pen-line"></i></span></span>
+                <span class="stat-icon"><i data-lucide="file-pen-line"></i></span>
             </div>
             <strong class="stat-number">{{ $stats['draft'] }}</strong>
             <div class="stat-foot">Produk yang disembunyikan</div>
@@ -491,6 +488,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 @endsection
+
 
 
 
