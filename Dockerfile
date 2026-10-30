@@ -30,3 +30,5 @@ RUN sed -ri 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf && sed -ri 's/<V
 EXPOSE 10000
 
 
+
+ENV MYSQL_ATTR_SSL_CA=/var/www/html/certs/isrgrootx1.pem
